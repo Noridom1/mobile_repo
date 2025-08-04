@@ -1,6 +1,5 @@
 package com.example.tiktoksharereceiver
 
-import android.R.id.input
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log.e
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +42,9 @@ class ShareReceiverActivity : AppCompatActivity() {
 
     private fun downloadVideo(videoUrl: String) {
         coroutineScope.launch {
-            tryval fileName = "tiktok_${System.currentTimeMillis()}.mp4"
+            try {
+                val input = URL(videoUrl).openStream()
+                val fileName = "tiktok_${System.currentTimeMillis()}.mp4"
 
                 val resolver = contentResolver
                 val videoCollection: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
